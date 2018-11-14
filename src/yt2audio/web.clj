@@ -15,13 +15,29 @@
       )
     )
 
+(defn getaudiolinksfrompl
+  [plurl]
+  (let [pi (new PythonInterpreter)]
+    (.exec pi "import youtube_dl")
+    (.exec pi "ydl_opts = {'quiet': False, 'skip_download': True, 'format': 'bestaudio',}")
+    (.exec pi (format "info = youtube_dl.YoutubeDL(ydl_opts).extract_info('%s')" plurl))
+    (.exec pi "print(info)")
+    (.exec pi "entries = info['entries']")
+    (.exec pi "print(len(entries))")
+    (.exec pi "urls = []\nfor e in entries:\n    urls.append(e['url'])")
+    (.exec pi "print(urls)")
+    (.exec pi "for e in urls:\n    print(e)")
+    (clojure.string/join "\n" (map #(str "<p><a href=\"" (.toString %) "\"/>" (.toString %) "</a></p>") (.toArray (.get pi "urls"))))))
+
 (defn getaudiolink
       [url]
       (let [pi (new PythonInterpreter)]
         (.exec pi "import youtube_dl")
-        (.exec pi "ydl_opts = {'quiet': False, 'skip_download': True, 'format': 'bestaudio',}")
+        (.exec pi "ydl_opts = {'quiet': False, 'skip_download': True, 'format': 'bestaudio[ext=m4a]',}")
         (.exec pi (format "info = youtube_dl.YoutubeDL(ydl_opts).extract_info('%s')" url))
+        (.exec pi "print(info)")
         (.exec pi "audiourl = info['url']")
+        (.exec pi "print(audiourl)")
         (.toString (.get pi "audiourl"))))
 
 (defn notfound
@@ -31,8 +47,12 @@
        :body "Hello from Heroku"})
 
 (defroutes app
-           (GET "/splash" request
+           (GET "/video" request
              (redirect (getaudiolink (:r (:params request)))))
+           (GET "/pl" request
+             {:status  200
+              :headers {"Content-Type" "text/html"}
+              :body (getaudiolinksfrompl (:r (:params request)))})
            (ANY "*" request
              (notfound)))
 
