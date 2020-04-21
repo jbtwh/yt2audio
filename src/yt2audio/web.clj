@@ -33,7 +33,7 @@
       [url]
       (let [pi (new PythonInterpreter)]
         (.exec pi "import youtube_dl")
-        (.exec pi "ydl_opts = {'quiet': False, 'skip_download': True, 'format': 'bestaudio[ext=m4a]',}")
+        (.exec pi "ydl_opts = {'quiet': False, 'verbose': True, 'skip_download': True, 'format': 'bestaudio[ext=m4a]',}")
         (.exec pi (format "info = youtube_dl.YoutubeDL(ydl_opts).extract_info('%s')" url))
         (.exec pi "print(info)")
         (.exec pi "audiourl = info['url']")
