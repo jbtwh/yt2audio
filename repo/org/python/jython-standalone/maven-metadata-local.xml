@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.python</groupId>
+  <artifactId>jython-standalone</artifactId>
+  <versioning>
+    <release>2.7.2fixed</release>
+    <versions>
+      <version>2.7.2fixed</version>
+    </versions>
+    <lastUpdated>20200421071405</lastUpdated>
+  </versioning>
+</metadata>

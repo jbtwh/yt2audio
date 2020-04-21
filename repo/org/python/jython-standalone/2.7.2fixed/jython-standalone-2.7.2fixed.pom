@@ -5,4 +5,5 @@
   <groupId>org.python</groupId>
   <artifactId>jython-standalone</artifactId>
   <version>2.7.2fixed</version>
+  <description>POM was created from install:install-file</description>
 </project>
