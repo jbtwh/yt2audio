@@ -5,7 +5,7 @@
                  [compojure "1.4.0"]
                  [ring/ring-jetty-adapter "1.4.0"]
                  [environ "1.0.0"]
-                 [org.python/jython-standalone "2.7.2"]]
+                 [org.python/jython-standalone "2.7.2fixed"]]
   :min-lein-version "2.0.0"
   :repositories {"local" ~(str (.toURI (java.io.File. "repo")))}
   :plugins [[environ/environ.lein "0.3.1"]]
